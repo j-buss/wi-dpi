@@ -9,4 +9,4 @@ def set_variables(bucket_name, blob_name):
     print(blob.download_as_string())
 
 if __name__ == "__main__":
-    set_variables("landing-009","landing-009/all_staff_report/2017_2018/AllStaffReportPublic__04152019_194414.csv")
+    set_variables()
