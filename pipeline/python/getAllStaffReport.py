@@ -34,15 +34,22 @@ def get_staff_report_new():
     file_download.close()
 
 def get_staff_report_zip():
-    files = collections.OrderedDict([
-        ('2013', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/13Staff.zip'),
-        ('2014', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/14Staff.zip'),
-        ('2015', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/15Staff.zip'),
-        ('2016', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/16Staff.zip'),
-    ])
-
-    for f in files:
+    fileList = [
+        ('2013', '2013.zip', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/13Staff.zip'),
+        ('2014', '2014.zip', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/14staff.zip'),
+        ('2015', '2015.zip', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/AllStaff2015rev10-31-2016.zip'),
+        ('2016', '2016.zip', 'https://dpi.wi.gov/sites/default/files/imce/cst/exe/AllStaff2016rev11-01-16.zip')
+    ]
+    for f in fileList:
         logging.debug(f[1])
+
+        r = requests.get(f[1])
+        r.raise_for_status()
+
+        file_download = open(f[0], 'wb')
+        for chunk in r.iter_content(100000):
+            file_download.write(chunk)
+        file_download.close()
 
 if __name__ == "__main__":
    get_staff_report_zip()
