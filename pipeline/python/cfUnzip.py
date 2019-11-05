@@ -1,25 +1,23 @@
 from google.cloud import storage
 from zipfile import ZipFile
 from zipfile import is_zipfile
-import logging
 import io
 
-storage_client = storage.Client()
-STAGING_BUCKET = "staging-008"
-logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
-# logging.disable(logging.CRITICAL)
+def zipextract(data, context):
 
+    bucketname = data['bucket']
+    zipfilename_with_path = data['name']
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucketname)
 
-def zip_extract(data, context):
+    destination_blob_pathname = zipfilename_with_path
 
-    bucket = storage_client.get_bucket(data['bucket'])
-    blob = bucket.blob(data['blob'])
+    blob = bucket.blob(destination_blob_pathname)
+    zipbytes = io.BytesIO(blob.download_as_string())
 
-    zip_bytes = io.BytesIO(blob.download_as_string())
-
-    if is_zipfile(zip_bytes):
-        with ZipFile(zip_bytes, 'r') as my_zip:
-            new_string = my_zip.extractall()
-            bucket = storage_client.get_bucket(STAGING_BUCKET)
-            new_blob = bucket.blob('extract-' + data['name'])
-            new_blob.upload_from_string(new_string)
+    if is_zipfile(zipbytes):
+        with ZipFile(zipbytes, 'r') as myzip:
+            for contentfilename in myzip.namelist():
+                contentfile = myzip.read(contentfilename)
+                blob = bucket.blob(zipfilename_with_path + "/" + contentfilename)
+                blob.upload_from_string(contentfile)
