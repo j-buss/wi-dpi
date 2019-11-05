@@ -1,19 +1,16 @@
 import logging
 import sys
 import json
-import shutil
 import os
 from google.cloud import storage
 from google.oauth2 import service_account
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
-#logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 
 def upload_blob_skinny(bucket, source_file_name, destination_blob_name):
     """Uploads a file to the bucket. Pass in storage client and bucket"""
-    # storage_client = storage.Client(project=project_id, credentials=credentials)
-    # bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_filename(source_file_name)
     print('File {} uploaded to {}.'.format(
@@ -49,17 +46,11 @@ def upload_dir_to_bucket(source_directory, bucket_name, bucket_folder, project_i
             destination_file_name = bucket_folder + "/" + file_name
             logging.debug("Uploading file: " + source_filename + " to location: " + bucket_name + "/" + destination_file_name)
             upload_blob_skinny(bucket, source_filename, destination_file_name)
-            # fullFileName = os.path.join(foldername, filename)
-            # fileSize = os.path.getsize(fullFileName)
-            # if fileSize > sizeThreshold:
-            #     print('File: ' + filename + ' is of size: ' + str(fileSize) + \
-            #        ' which is larger than the threshold of : ' + str(sizeThreshold))
-            #    os.unlink(fullFileName)
 
 
 if __name__ == "__main__":
     upload_dir_to_bucket("/tmp/download_urls",
                          "landing-008",
-                         "raw",
+                         "",  # empty "path", put files right in the "base"
                          "wi-dpi-010",
                          "/home/jeremyfbuss/wi-dpi-analysis/.gcp/API_Data_Storage_Service_Account.json")
