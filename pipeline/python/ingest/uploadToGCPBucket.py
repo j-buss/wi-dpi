@@ -43,7 +43,10 @@ def upload_dir_to_bucket(source_directory, bucket_name, bucket_folder, project_i
     for folder_name, sub_folders, file_names in os.walk(source_directory):
         for file_name in file_names:
             source_filename = os.path.join(folder_name, file_name)
-            destination_file_name = bucket_folder + "/" + file_name
+            if bucket_folder == "":
+                destination_file_name = file_name
+            else:
+                destination_file_name = bucket_folder + "/" + file_name
             logging.debug("Uploading file: " + source_filename + " to location: " + bucket_name + "/" + destination_file_name)
             upload_blob_skinny(bucket, source_filename, destination_file_name)
 
