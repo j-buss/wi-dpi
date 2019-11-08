@@ -3,7 +3,7 @@ import os
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
-#logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 target_folder = "/tmp/download_urls"
 
@@ -20,4 +20,5 @@ if __name__ == "__main__":
                 with zipfile.ZipFile(full_zip_file, 'w') as zip:
                     zip.write(full_file_name, os.path.basename(full_file_name), compress_type=zipfile.ZIP_DEFLATED)
                 logging.debug("Created: " + full_zip_file)
+                print("Created: " + full_zip_file)
                 os.unlink(full_file_name)
