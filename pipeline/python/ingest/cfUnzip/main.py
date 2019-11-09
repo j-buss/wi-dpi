@@ -3,21 +3,25 @@ from zipfile import ZipFile
 from zipfile import is_zipfile
 import io
 
+STAGING_BUCKET = "staging-008"
+
+
 def zipextract(data, context):
 
-    bucketname = data['bucket']
+    source_bucketname = data['bucket']
     zipfilename_with_path = data['name']
     storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucketname)
+    source_bucket = storage_client.get_bucket(source_bucketname)
+    target_bucket = storage_client.get_bucket(STAGING_BUCKET)
 
     destination_blob_pathname = zipfilename_with_path
 
-    blob = bucket.blob(destination_blob_pathname)
-    zipbytes = io.BytesIO(blob.download_as_string())
+    source_blob = source_bucket.blob(destination_blob_pathname)
+    zipbytes = io.BytesIO(source_blob.download_as_string())
 
     if is_zipfile(zipbytes):
         with ZipFile(zipbytes, 'r') as myzip:
             for contentfilename in myzip.namelist():
                 contentfile = myzip.read(contentfilename)
-                blob = bucket.blob(zipfilename_with_path + "/" + contentfilename)
-                blob.upload_from_string(contentfile)
+                target_blob = target_bucket.blob(contentfilename)
+                target_blob.upload_from_string(contentfile)
