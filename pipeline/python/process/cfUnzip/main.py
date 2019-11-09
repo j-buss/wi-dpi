@@ -12,7 +12,10 @@ def zipextract(data, context):
     zipfilename_with_path = data['name']
     storage_client = storage.Client()
     source_bucket = storage_client.get_bucket(source_bucketname)
-    target_bucket = storage_client.get_bucket(STAGING_BUCKET)
+
+    # Potential to use the following to change target bucket
+    # target_bucket = storage_client.get_bucket(STAGING_BUCKET)
+    target_bucket = source_bucket
 
     destination_blob_pathname = zipfilename_with_path
 
