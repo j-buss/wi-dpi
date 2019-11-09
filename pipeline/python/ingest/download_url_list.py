@@ -23,17 +23,17 @@ download_url_list = [
                        params="",
                        target_directory="/tmp/download_urls"
                        ),
-    download_url_tuple(file_name="2017.xlsx",
+    download_url_tuple(file_name="2017.csv",
                        url="https://publicstaffreports.dpi.wi.gov/PubStaffReport/Public/PublicReport/AllStaffReportDownload",
                        params=collections.OrderedDict([('selectedYear', 2017)]),
                        target_directory="/tmp/download_urls"
                        ),
-    download_url_tuple(file_name="2018.xlsx",
+    download_url_tuple(file_name="2018.csv",
                        url="https://publicstaffreports.dpi.wi.gov/PubStaffReport/Public/PublicReport/AllStaffReportDownload",
                        params=collections.OrderedDict([('selectedYear', 2018)]),
                        target_directory="/tmp/download_urls"
                        ),
-    download_url_tuple(file_name="2019.xlsx",
+    download_url_tuple(file_name="2019.csv",
                        url="https://publicstaffreports.dpi.wi.gov/PubStaffReport/Public/PublicReport/AllStaffReportDownload",
                        params=collections.OrderedDict([('selectedYear', 2019)]),
                        target_directory="/tmp/download_urls"

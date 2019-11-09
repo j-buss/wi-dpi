@@ -20,6 +20,10 @@ def excel_to_csv(data, context):
         logging.debug(source_blob_name)
         fs = gcsfs.GCSFileSystem(project=project_id)
         with fs.open(os.path.join(source_bucket_name, source_blob_name)) as f:
-            df = pd.read_excel(f)
-            with fs.open(os.path.join(source_bucket_name, source_blob_basename + ".csv"), "w") as out:
-                df.to_csv(out, encoding='utf-8', index=False)
+            xlsx = pd.ExcelFile(f)
+            for sheet in xlsx.sheet_names:
+                out_file_name = os.path.join(source_bucket_name, source_blob_basename + "_" + sheet + ".csv")
+                df = pd.read_excel(xlsx, sheet)
+                with fs.open(out_file_name, "w") as out:
+                    df.to_csv(out, encoding='utf-8', index=False)
+                print("Finished converting: " + source_blob_name + " Sheet: " + sheet)
