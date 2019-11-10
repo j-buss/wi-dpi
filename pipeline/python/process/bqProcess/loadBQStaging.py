@@ -4,6 +4,7 @@ from google.cloud import bigquery
 from google.api_core import exceptions
 from google.cloud import storage
 import logging
+import csv
 import json
 
 # from io import StringIO
@@ -91,6 +92,25 @@ def create_table_csv(client, project_id, blob_uri, dataset_id):
     df.columns = clean_column_headers(df.columns)
     print(landing_dataset_name + '.' + blob.file)
     df.to_gbq(landing_dataset_name + '.' + blob.file, project_id=project_id, if_exists='replace')
+
+
+def rm_csv_cols(file_name, cols_to_remove):
+    input_file = file_name
+    output_file = file_name
+
+    cols_to_remove = sorted(cols_to_remove, reverse=True)  # Reverse so we remove from the end first
+    row_count = 0  # Current amount of rows processed
+
+    with open(input_file, "r") as source:
+        reader = csv.reader(source)
+        with open(output_file, "w", newline='') as result:
+            writer = csv.writer(result)
+            for row in reader:
+                row_count += 1
+                print('\r{0}'.format(row_count), end='')  # Print rows processed
+                for col_index in cols_to_remove:
+                    del row[col_index]
+                writer.writerow(row)
 
 
 def create_table_fwf():
