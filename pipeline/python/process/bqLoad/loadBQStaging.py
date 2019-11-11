@@ -1,42 +1,16 @@
-# import numpy as np
-# import pandas as pd
 from google.cloud import bigquery
-from google.api_core import exceptions
 from google.cloud import storage
-import logging
-import csv
-import json
-
-# from io import StringIO
-# import re
-# import collections
 from google.oauth2 import service_account
+
+import sys
+import logging
+import json
+import pandas as pd
+import os
+from io import StringIO
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 # logging.disable(logging.CRITICAL)
-
-
-def create_dataset(client, project_id, dataset_name):
-    dataset_id = "{}.{}".format(project_id, dataset_name)
-    dataset = bigquery.Dataset(dataset_id)
-    dataset.location = "US"
-
-    dataset = client.create_dataset(dataset)
-    print("Created dataset {}.{}".format(client.project, dataset.dataset_id))
-
-
-def delete_dataset(client, project_id, dataset_name):
-    dataset_id = "{}.{}".format(project_id, dataset_name)
-    client.delete_dataset(dataset_id, delete_contents=True, not_found_ok=True)
-
-
-def return_blob_list(project_id, bucket_name):
-    """Lists all the blobs in the bucket."""
-    storage_client = storage.Client(project=project_id)
-    bucket = storage_client.get_bucket(bucket_name)
-
-    blobs = bucket.list_blobs()
-    return blobs
 
 
 def clean_column_headers(columns):
@@ -48,7 +22,7 @@ def load_credentials(api_file):
     try:
         with open(api_file) as source:
             info = json.load(source)
-        credentials = service_account.Credentials.from_service_account_info(info)
+        creds = service_account.Credentials.from_service_account_info(info)
         logging.debug("Successful authorization")
 
     except FileNotFoundError:
@@ -57,101 +31,43 @@ def load_credentials(api_file):
         print("Exiting now.")
         sys.exit(1)
 
-    return credentials
+    return creds
 
 
-def create_table_csv(client, project_id, blob_uri, dataset_id):
-    # from google.cloud import bigquery
-    # client = bigquery.Client()
-    # dataset_id = 'my_dataset'
+def load_bq_from_csv(config_dict, credentials):
 
-    dataset_ref = client.dataset(dataset_id)
-    job_config = bigquery.LoadJobConfig()
-    #job_config.schema = [
-    #    bigquery.SchemaField("name", "STRING"),
-    #    bigquery.SchemaField("post_abbr", "STRING"),
-    #]
-    job_config.skip_leading_rows = 1
-    # The source format defaults to CSV, so the line below is optional.
-    job_config.source_format = bigquery.SourceFormat.CSV
-    uri = "gs://cloud-samples-data/bigquery/us-states/us-states.csv"
+    project_id = config_dict['project_id']
+    bucket_name = config_dict['bucket_name']
+    source_blob_name = config_dict['source_blob_name']
+    dataset_name = config_dict['dataset_name']
+    target_table_name = config_dict['name']
 
-    load_job = client.load_table_from_uri(
-        uri, dataset_ref.table("us_states"), job_config=job_config
-    )  # API request
-    print("Starting job {}".format(load_job.job_id))
+    source_blob_basename, source_blob_ext = os.path.splitext(source_blob_name)
 
-    load_job.result()  # Waits for table load to complete.
-    print("Job finished.")
+    bq_client = bigquery.Client(project=project_id, credentials=credentials)
+    storage_client = storage.Client(project=project_id, credentials=credentials)
 
-    destination_table = client.get_table(dataset_ref.table("us_states"))
-    print("Loaded {} rows.".format(destination_table.num_rows))
-    data_blob = bucket.get_blob(blob.fullname)
-    data = data_blob.download_as_string()
+    source_bucket = storage_client.get_bucket(bucket_name)
+    source_blob = source_bucket.blob(source_blob_name)
+
+    data = source_blob.download_as_string()
     df = pd.read_csv(StringIO(data.decode('utf-8')), low_memory=False)
     df.columns = clean_column_headers(df.columns)
-    print(landing_dataset_name + '.' + blob.file)
-    df.to_gbq(landing_dataset_name + '.' + blob.file, project_id=project_id, if_exists='replace')
-
-
-def rm_csv_cols(file_name, cols_to_remove):
-    input_file = file_name
-    output_file = file_name
-
-    cols_to_remove = sorted(cols_to_remove, reverse=True)  # Reverse so we remove from the end first
-    row_count = 0  # Current amount of rows processed
-
-    with open(input_file, "r") as source:
-        reader = csv.reader(source)
-        with open(output_file, "w", newline='') as result:
-            writer = csv.writer(result)
-            for row in reader:
-                row_count += 1
-                print('\r{0}'.format(row_count), end='')  # Print rows processed
-                for col_index in cols_to_remove:
-                    del row[col_index]
-                writer.writerow(row)
-
-
-def create_table_fwf():
-    for blob in list_of_blobs:
-        if blob.file_type == 'csv':
-            data_blob = bucket.get_blob(blob.fullname)
-            data = data_blob.download_as_string()
-            df = pd.read_csv(StringIO(data.decode('utf-8')), low_memory=False)
-            df.columns = clean_column_headers(df.columns)
-            print(landing_dataset_name + '.' + blob.file)
-            df.to_gbq(landing_dataset_name + '.' + blob.file, project_id=project_id, if_exists='replace')
-        elif blob.file_type == 'fwf':
-            data_blob = bucket.get_blob(blob.fullname)
-            data = data_blob.download_as_string()
-            metadata_file = \
-            [x_blob.source + '/' + x_blob.year + '/' + x_blob.file + '.' + x_blob.file_type for x_blob in list_of_blobs \
-             if (x_blob.file == blob.file and x_blob.file_type != blob.file_type)][0]
-            metadata_blob = bucket.get_blob(metadata_file)
-            metadata = metadata_blob.download_as_string()
-            metadata_df = pd.read_csv(StringIO(metadata.decode('utf-8')))
-            col_widths = metadata_df['length'].apply(int)
-            col_names = metadata_df['name']
-            df = pd.read_fwf(StringIO(data.decode('utf-8')), widths=col_widths, names=col_names)
-            df.columns = clean_column_headers(df.columns)
-            print(landing_dataset_name + '.' + blob.file)
-            df.to_gbq(landing_dataset_name + '.' + blob.file, project_id=project_id, if_exists='replace')
+    print("Loading: " + dataset_name + '.' + source_blob_basename)
+    df.to_gbq(dataset_name + '.' + target_table_name, project_id=project_id, if_exists='replace')
+    print("Finished load of: " + dataset_name + '.' + source_blob_basename)
 
 
 if __name__ == "__main__":
 
-    project_id = 'wi-dpi-010'
-    staging_data_bucket_name = 'landing-009'
+    # configuration_file = sys.argv[1]
+    configuration_file = "/home/jeremyfbuss/wi-dpi-analysis/.gcp/bq_load_config.json"
+    credentials = load_credentials("/home/jeremyfbuss/wi-dpi-analysis/.gcp/API_process_data.json")
 
-    landing_dataset_name = 'landing_001'
-    refined_dataset_name = 'refined_001'
-    creds = load_credentials("/home/jeremyfbuss/wi-dpi-analysis/.gcp/API_Data_Processing_Service_Account.json")
+    with open(configuration_file) as config_file:
+        data = json.load(config_file)
 
-    bq_client = bigquery.Client(project=project_id, credentials=creds)
-    try:
-        create_dataset(bq_client, project_id, landing_dataset_name)
-    except exceptions.Conflict:
-        print("Dataset: " + landing_dataset_name + " already exists in project: " + project_id)
-
+    for json_dict in data:
+        if json_dict['type'] == "csv":
+            load_bq_from_csv(json_dict, credentials)
 
