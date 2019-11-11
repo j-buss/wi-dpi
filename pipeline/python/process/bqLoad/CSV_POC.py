@@ -34,15 +34,15 @@ def load_credentials(api_file):
     return creds
 
 
-if __name__ == "__main__":
+def load_bq_from_csv(config_dict, credentials):
 
-    project_id = 'wi-dpi-010'
-    bucket_name = 'staging-008'
-    dataset_name = 'test_staging'
-    source_blob_name = "2019.csv"
+    project_id = config_dict['project_id']
+    bucket_name = config_dict['bucket_name']
+    source_blob_name = config_dict['source_blob_name']
+    dataset_name = config_dict['dataset_name']
+    target_table_name = config_dict['name']
+
     source_blob_basename, source_blob_ext = os.path.splitext(source_blob_name)
-
-    credentials = load_credentials("/home/jeremyfbuss/wi-dpi-analysis/.gcp/API_process_data.json")
 
     bq_client = bigquery.Client(project=project_id, credentials=credentials)
     storage_client = storage.Client(project=project_id, credentials=credentials)
@@ -52,8 +52,22 @@ if __name__ == "__main__":
 
     data = source_blob.download_as_string()
     df = pd.read_csv(StringIO(data.decode('utf-8')), low_memory=False)
-    # df = pd.read_csv(data)
     df.columns = clean_column_headers(df.columns)
-    logging.debug("Loading: " + dataset_name + '.' + source_blob_basename)
-    df.to_gbq(dataset_name + '.' + source_blob_basename, project_id=project_id, if_exists='replace')
-    logging.debug("Finished load of: " + dataset_name + '.' + source_blob_basename)
+    print("Loading: " + dataset_name + '.' + source_blob_basename)
+    df.to_gbq(dataset_name + '.' + target_table_name, project_id=project_id, if_exists='replace')
+    print("Finished load of: " + dataset_name + '.' + source_blob_basename)
+
+
+if __name__ == "__main__":
+
+    # configuration_file = sys.argv[1]
+    configuration_file = "/home/jeremyfbuss/wi-dpi-analysis/.gcp/bq_load_config.json"
+    credentials = load_credentials("/home/jeremyfbuss/wi-dpi-analysis/.gcp/API_process_data.json")
+
+    with open(configuration_file) as config_file:
+        data = json.load(config_file)
+
+    for json_dict in data:
+        if json_dict['type'] == "csv":
+            load_bq_from_csv(json_dict, credentials)
+
