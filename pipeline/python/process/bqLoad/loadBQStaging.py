@@ -1,6 +1,7 @@
 from google.cloud import storage
 from google.cloud import bigquery
 from google.oauth2 import service_account
+from google.api_core import exceptions
 
 import sys
 import logging
@@ -41,9 +42,9 @@ def create_dataset(client, dataset_name):
 
     try:
         dataset = client.create_dataset(dataset)
-    except google.api_core.exceptions.Conflict:
-        print("Dataset {}.{} already exists".format(client.project, dataset_name))
-    print("Created dataset {}.{}".format(client.project, dataset_name))
+        print("Created dataset {}.{}".format(client.project, dataset_name))
+    except exceptions.Conflict:
+        logging.debug("Dataset {}.{} already exists".format(client.project, dataset_name))
 
 
 def delete_dataset(client, project_id, dataset_name):
@@ -83,7 +84,8 @@ def load_bq_from_csv(config_dict, credentials):
     df.columns = clean_column_headers(df.columns)
     logging.debug(df.head)
     df.to_gbq(dataset_name + '.' + target_table_name, project_id=project_id, credentials=credentials, if_exists='replace')
-    print("Finished load of: " + dataset_name + '.' + source_blob_basename)
+    print("-----Finished load of: " + dataset_name + '.' + source_blob_basename)
+    print("\n")
 
 
 if __name__ == "__main__":
