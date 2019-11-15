@@ -5,7 +5,7 @@ SELECT
   SAFE_CAST(all_staff_report.file_number as INT64) as file_number,
   TRIM(all_staff_report.gndr) as gender,
   TRIM(all_staff_report.raceethn) as race_ethnicity_cd,
-  race_ethnicity.description as race_ethnicity_desc,  
+  race_ethnicity.description as race_ethnicity_desc,
   all_staff_report.birth_year,
   SAFE_CAST(all_staff_report.high_degree as INT64) as high_degree_cd,
   TRIM(highest_degree.description) as high_degree_desc,
@@ -13,8 +13,8 @@ SELECT
   all_staff_report.cntrct_days as contract_days,
   all_staff_report.local_exp,
   all_staff_report.total_exp,
-  all_staff_report.tot_salary,
-  all_staff_report.tot_fringe,
+  CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.tot_salary, r"^[$]",""), r",","") AS FLOAT64) as salary,
+  CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.tot_fringe, r"^[$]",""), r",","") AS FLOAT64) as benefits,
   SAFE_CAST(all_staff_report.staff_cat as INT64) as staff_category_cd,
   TRIM(staff_cat.description) as staff_category_desc,
   LPAD(CAST(all_staff_report.hire_agncy_typ AS STRING), 2, "0") as hire_agency_type_cd,
@@ -58,20 +58,20 @@ SELECT
   TRIM(all_staff_report.lt_sub) as long_term_sub,
   TRIM(all_staff_report.sub_cntrctd) as sub_contracted
 FROM
-  `wi-dpi-010.2016.2016_raw_data` all_staff_report 
-  LEFT JOIN `wi-dpi-010.2016.2016_positions` position 
+  `wi-dpi-010.2015.2015_raw_data` all_staff_report 
+  LEFT JOIN `wi-dpi-010.2015.2015_positions` position 
    ON all_staff_report.position_cd = position.code
-  LEFT JOIN `wi-dpi-010.2016.2016_assignment_area` assignment_area
+  LEFT JOIN `wi-dpi-010.2015.2015_assignment_area` assignment_area
    ON all_staff_report.assgn_area_cd = CAST(assignment_area.code as INT64)
-  LEFT JOIN `wi-dpi-010.2016.2016_highest_educational_degree` highest_degree
+  LEFT JOIN `wi-dpi-010.2015.2015_highest_educational_degree` highest_degree
    ON SAFE_CAST(all_staff_report.high_degree as INT64) = highest_degree.code
-  LEFT JOIN `wi-dpi-010.2016.2016_staff_category` staff_cat
+  LEFT JOIN `wi-dpi-010.2015.2015_staff_category` staff_cat
    ON SAFE_CAST(all_staff_report.staff_cat as INT64) = staff_cat.code
-  LEFT JOIN `wi-dpi-010.2016.2016_position_type` pos_type
+  LEFT JOIN `wi-dpi-010.2015.2015_position_type` pos_type
    ON position.position_type = pos_type.code
-  LEFT JOIN `wi-dpi-010.2016.2016_agency_type` hire_agency_type
-   ON all_staff_report.hire_agncy_typ = LPAD(CAST(hire_agency_type.code AS STRING), 2, "0")
-  LEFT JOIN `wi-dpi-010.2016.2016_agency_type` work_agency_type
-   ON all_staff_report.work_agncy_typ = LPAD(CAST(work_agency_type.code AS STRING), 2, "0")
-  LEFT JOIN `wi-dpi-010.2016.2016_race` race_ethnicity
+  LEFT JOIN `wi-dpi-010.2015.2015_agency_type` hire_agency_type
+   ON LPAD(CAST(all_staff_report.hire_agncy_typ AS STRING), 2, "0") = hire_agency_type.code
+  LEFT JOIN `wi-dpi-010.2015.2015_agency_type` work_agency_type
+   ON LPAD(CAST(all_staff_report.work_agncy_typ AS STRING), 2, "0") = work_agency_type.code
+  LEFT JOIN `wi-dpi-010.2015.2015_race` race_ethnicity
    ON TRIM(all_staff_report.raceethn) = race_ethnicity.code

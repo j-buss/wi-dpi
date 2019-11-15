@@ -1,0 +1,12 @@
+[
+	{
+		"name":"2018",
+		"type":"csv",
+		"project_id":"wi-dpi-010",
+		"bucket_name":"staging-008",
+		"dataset_name":"2018",
+		"source_blob_name":"2018.csv",
+		"del_rows":"",
+		"del_cols":""
+	}
+]
