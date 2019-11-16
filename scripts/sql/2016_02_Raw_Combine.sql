@@ -13,8 +13,8 @@ SELECT
   all_staff_report.cntrct_days as contract_days,
   all_staff_report.local_exp,
   all_staff_report.total_exp,
-  all_staff_report.tot_salary,
-  all_staff_report.tot_fringe,
+  all_staff_report.tot_salary as salary,
+  all_staff_report.tot_fringe as benefits,
   SAFE_CAST(all_staff_report.staff_cat as INT64) as staff_category_cd,
   TRIM(staff_cat.description) as staff_category_desc,
   LPAD(CAST(all_staff_report.hire_agncy_typ AS STRING), 2, "0") as hire_agency_type_cd,
@@ -69,9 +69,9 @@ FROM
    ON SAFE_CAST(all_staff_report.staff_cat as INT64) = staff_cat.code
   LEFT JOIN `wi-dpi-010.2016.2016_position_type` pos_type
    ON position.position_type = pos_type.code
-  LEFT JOIN `wi-dpi-010.2016.2016_agency_type` hire_agency_type
-   ON all_staff_report.hire_agncy_typ = LPAD(CAST(hire_agency_type.code AS STRING), 2, "0")
-  LEFT JOIN `wi-dpi-010.2016.2016_agency_type` work_agency_type
-   ON all_staff_report.work_agncy_typ = LPAD(CAST(work_agency_type.code AS STRING), 2, "0")
+  LEFT JOIN `wi-dpi-010.2016.2016_agency_type_NEW` hire_agency_type
+   ON all_staff_report.hire_agncy_typ = hire_agency_type.format_code
+  LEFT JOIN `wi-dpi-010.2016.2016_agency_type_NEW` work_agency_type
+   ON all_staff_report.work_agncy_typ = work_agency_type.format_code
   LEFT JOIN `wi-dpi-010.2016.2016_race` race_ethnicity
    ON TRIM(all_staff_report.raceethn) = race_ethnicity.code
