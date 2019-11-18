@@ -11,8 +11,8 @@ FROM
       A.id_nbr,
       A.salary,
       A.assgn_fte,
-      CASE WHEN A.Salary is Not Null THEN 1 ELSE 0 END AS Salary_Cnt,
-      CASE WHEN A.Salary is Null THEN 1 ELSE 0 END AS Null_Salary_Cnt
+      CASE WHEN A.Salary <> 0 THEN 1 ELSE 0 END AS Salary_Cnt,
+      CASE WHEN A.Salary != 0 THEN 1 ELSE 0 END AS Null_Salary_Cnt
     FROM
       `wi-dpi-010.2015.2015_BASE` A) B
 GROUP BY
@@ -31,8 +31,8 @@ FROM
       A.id_nbr,
       A.salary,
       A.assgn_fte,
-      CASE WHEN A.Salary is Not Null THEN 1 ELSE 0 END AS Salary_Cnt,
-      CASE WHEN A.Salary is Null THEN 1 ELSE 0 END AS Null_Salary_Cnt
+      CASE WHEN A.Salary <> 0 THEN 1 ELSE 0 END AS Salary_Cnt,
+      CASE WHEN A.Salary != 0 THEN 1 ELSE 0 END AS Null_Salary_Cnt
     FROM
       `wi-dpi-010.2016.2016_BASE` A) B
 GROUP BY
