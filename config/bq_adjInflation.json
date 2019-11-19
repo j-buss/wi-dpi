@@ -1,0 +1,14 @@
+[
+	{
+		"SQL": "SELECT * FROM `wi-dpi-010.2015.2015_BASE` LIMIT 10",
+		"Reference Year" : "2015",
+		"Target Dataset": "2015",
+		"Target Table": "2015_BASE_Adj"
+	},
+	{
+		"SQL": "SELECT * FROM `wi-dpi-010.2016.2016_BASE` LIMIT 10",
+		"Reference Year" : "2016",
+		"Target Dataset": "2016",
+		"Target Table": "2016_BASE_Adj"
+	}
+]
