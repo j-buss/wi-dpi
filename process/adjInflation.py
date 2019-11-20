@@ -17,20 +17,18 @@ if __name__ == "__main__":
     credential_file = sys.argv[1]
     configuration_file = sys.argv[2]
 
-    # cpi.update()
+    cpi.update()
     creds = gcp.load_gcp_credentials(credential_file)
 
     with open(configuration_file) as config_file:
         data = json.load(config_file)
 
     for json_dict in data:
-        # for i in data:
-        sql = data["SQL"]
-        print(sql)
-            #ref_year = i["Reference Year"]
-            #target_dataset = i["Target Dataset"]
-            #target_table = i["Target Table"]
-            #temp_df = pd.read_gbq(sql, credentials=creds)
-            #temp_df['salary_adj'] = temp_df.apply(lambda x: cpi.inflate(x.salary, ref_year), axis=1)
-            #temp_df['benefits_adj'] = temp_df.apply(lambda x: cpi.inflate(x.benefits, ref_year), axis=1)
-            ##temp_df.to_gbq(target_dataset + "." + target_table,credentials=creds)
+        sql = json_dict["SQL"]
+        ref_year = json_dict["Reference Year"]
+        target_dataset = json_dict["Target Dataset"]
+        target_table = json_dict["Target Table"]
+        temp_df = pd.read_gbq(sql, credentials=creds)
+        temp_df['salary_adj'] = temp_df.apply(lambda x: cpi.inflate(x.salary, int(ref_year)), axis=1).round(2)
+        temp_df['benefits_adj'] = temp_df.apply(lambda x: cpi.inflate(x.benefits, int(ref_year)), axis=1).round(2)
+        temp_df.to_gbq(target_dataset + "." + target_table,credentials=creds, if_exists='replace')
