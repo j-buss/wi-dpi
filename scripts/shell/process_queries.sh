@@ -18,10 +18,10 @@
 
 # Run Processing for Inflation Adjustment
 #    may require export PYTHONPATH=$PYTHONPATH:`pwd` from the "wi-dpi-analysis" directory
-python3 process/adjInflation.py .gcp/API_process_data.json config/bq_adjInflation.json
+# python3 process/adjInflation.py .gcp/API_process_data.json config/bq_adjInflation.json
 
 # Create Educator Summaries by Year
-# python3 ../../gprocess/bqLoad/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/Educator_Role_Summary_by_Year.sql "Merged" "Educator_Role_Summary_by_Year"
-# python3 ../../gprocess/bqLoad/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/Educator_Position_Classification_by_Year.sql "Merged" "Educator_Position_Classification_by_Year"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Educator_Role_Summary_by_Year.sql "Merged" "Educator_Role_Summary_by_Year"
+# python3 process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/Educator_Position_Classification_by_Year.sql "Merged" "Educator_Position_Classification_by_Year"
 
 # Create
