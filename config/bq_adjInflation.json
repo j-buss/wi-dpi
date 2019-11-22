@@ -1,26 +1,26 @@
 [
 	{
-		"SQL": "SELECT * FROM `wi-dpi-010.2015.2015_BASE`",
+		"SQL": "SELECT * FROM `wi-dpi-010.2015.2015_Nominal`",
 		"Reference Year" : "2015",
 		"Target Dataset": "2015",
-		"Target Table": "2015_BASE_Adj"
+		"Target Table": "2015_Real"
 	},
 	{
-		"SQL": "SELECT * FROM `wi-dpi-010.2016.2016_BASE`",
+		"SQL": "SELECT * FROM `wi-dpi-010.2016.2016_Nominal`",
 		"Reference Year" : "2016",
 		"Target Dataset": "2016",
-		"Target Table": "2016_BASE_Adj"
+		"Target Table": "2016_Real"
 	},
 	{
-		"SQL": "SELECT * FROM `wi-dpi-010.2017.2017_BASE`",
+		"SQL": "SELECT * FROM `wi-dpi-010.2017.2017_Nominal`",
 		"Reference Year" : "2017",
 		"Target Dataset": "2017",
-		"Target Table": "2017_BASE_Adj"
+		"Target Table": "2017_Real"
 	},
 	{
-		"SQL": "SELECT * FROM `wi-dpi-010.2018.2018_BASE`",
+		"SQL": "SELECT * FROM `wi-dpi-010.2018.2018_Nominal`",
 		"Reference Year" : "2018",
 		"Target Dataset": "2018",
-		"Target Table": "2018_BASE_Adj"
+		"Target Table": "2018_Real"
 	}
 ]

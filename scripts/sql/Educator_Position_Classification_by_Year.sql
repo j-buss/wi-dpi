@@ -15,7 +15,7 @@ FROM
       'OTHER'
     END AS position_classification
   FROM
-  `wi-dpi-010.2015.2015_BASE` all_staff_report) A
+  `wi-dpi-010.2015.2015_Real` all_staff_report) A
 GROUP BY
   A.year,
   A.key
@@ -37,7 +37,7 @@ FROM
       'OTHER'
     END AS position_classification
   FROM
-  `wi-dpi-010.2016.2016_BASE` all_staff_report) A
+  `wi-dpi-010.2016.2016_Real` all_staff_report) A
 GROUP BY
   A.year,
   A.key
@@ -60,7 +60,7 @@ FROM
       ELSE 0
     END AS o_cnt
   FROM
-    `wi-dpi-010.2018.2018_BASE` all_staff_report) A
+    `wi-dpi-010.2018.2018_Real` all_staff_report) A
 GROUP BY
   1, 2
 UNION ALL
@@ -82,7 +82,7 @@ FROM
       ELSE 0
     END AS o_cnt
   FROM
-    `wi-dpi-010.2017.2017_BASE` all_staff_report) A
+    `wi-dpi-010.2017.2017_Real` all_staff_report) A
 GROUP BY
   1, 2
 UNION ALL
@@ -104,6 +104,6 @@ FROM
       ELSE 0
     END AS o_cnt
   FROM
-    `wi-dpi-010.2019.2019_BASE` all_staff_report) A
+    `wi-dpi-010.2019.2019_Real` all_staff_report) A
 GROUP BY
   1, 2
