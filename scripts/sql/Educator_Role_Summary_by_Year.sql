@@ -2,6 +2,10 @@ SELECT
   "2015" as Year,
   B.id_nbr as key,
   COUNT(*) AS Rec_Cnt,
+  COUNT(B.cesa_num) as Cesa_Cnt,
+  COUNT(B.county_number) as County_Cnt,
+  COUNT(B.work_location_name) as District_Cnt,
+  COUNT(B.school_name) as School_Cnt,
   ROUND(SUM(B.assgn_fte),3) AS Assignment_FTE,
   COUNT(distinct B.salary) AS Contract_Cnt,
   SUM(B.Salary_Cnt) AS Salary_Cnt,
@@ -11,6 +15,10 @@ FROM
       A.id_nbr,
       A.salary,
       A.assgn_fte,
+      A.cesa_num,
+      A.county_number,
+      A.work_location_name,
+      A.school_name,
       CASE WHEN A.Salary <> 0 THEN 1 ELSE 0 END AS Salary_Cnt,
       CASE WHEN A.Salary != 0 THEN 1 ELSE 0 END AS Null_Salary_Cnt
     FROM
@@ -22,6 +30,10 @@ SELECT
   "2016" as Year,
   B.id_nbr as key,
   COUNT(*) AS Rec_Cnt,
+  COUNT(B.cesa_num) as Cesa_Cnt,
+  COUNT(B.county_number) as County_Cnt,
+  COUNT(B.work_location_name) as District_Cnt,
+  COUNT(B.school_name) as School_Cnt,
   ROUND(SUM(B.assgn_fte),3) AS Assignment_FTE,
   COUNT(distinct B.salary) AS Contract_Cnt,
   SUM(B.Salary_Cnt) AS Salary_Cnt,
@@ -31,6 +43,10 @@ FROM
       A.id_nbr,
       A.salary,
       A.assgn_fte,
+      A.cesa_num,
+      A.county_number,
+      A.work_location_name,
+      A.school_name,
       CASE WHEN A.Salary <> 0 THEN 1 ELSE 0 END AS Salary_Cnt,
       CASE WHEN A.Salary != 0 THEN 1 ELSE 0 END AS Null_Salary_Cnt
     FROM
