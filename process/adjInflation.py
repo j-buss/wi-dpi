@@ -29,6 +29,8 @@ if __name__ == "__main__":
         target_dataset = json_dict["Target Dataset"]
         target_table = json_dict["Target Table"]
         temp_df = pd.read_gbq(sql, credentials=creds)
-        temp_df['salary_adj'] = temp_df.apply(lambda x: cpi.inflate(x.salary, int(ref_year)), axis=1).round(2)
-        temp_df['benefits_adj'] = temp_df.apply(lambda x: cpi.inflate(x.benefits, int(ref_year)), axis=1).round(2)
+        temp_df['salary_nominal'] = temp_df['salary']
+        temp_df['benefits_nominal'] = temp_df['benefits']
+        temp_df['salary'] = temp_df.apply(lambda x: cpi.inflate(x.salary, int(ref_year)), axis=1).round(2)
+        temp_df['benefits'] = temp_df.apply(lambda x: cpi.inflate(x.benefits, int(ref_year)), axis=1).round(2)
         temp_df.to_gbq(target_dataset + "." + target_table,credentials=creds, if_exists='replace')
