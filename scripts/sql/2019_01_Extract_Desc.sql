@@ -3,7 +3,7 @@ SELECT
   all_staff_report.school_year as year_session,
   TRIM(lower(all_staff_report.first_name)) as first_name,
   TRIM(lower(all_staff_report.last_name)) as last_name,
-  SAFE_CAST(all_staff_report.entity_id as INT64) as entity_id,
+  SAFE_CAST(all_staff_report.entity_id as STRING) as entity_id,
   TRIM(all_staff_report.gender) as gender,
   TRIM(SPLIT(all_staff_report.raceethnicity, " - ")[safe_offset(0)]) as race_ethnicity_cd,
   TRIM(SPLIT(all_staff_report.raceethnicity, " - ")[safe_offset(1)]) as race_ethnicity_desc,
@@ -16,7 +16,9 @@ SELECT
   all_staff_report.contract_local_experience,
   all_staff_report.contract_total_experience,
   CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.total_salary, r"^[$]",""), r",","") AS FLOAT64) as salary,
+  CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.total_salary, r"^[$]",""), r",","") AS FLOAT64) as salary_nominal,
   CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.total_fringe, r"^[$]",""), r",","") AS FLOAT64) as benefits,
+  CAST(REGEXP_REPLACE(REGEXP_REPLACE(all_staff_report.total_fringe, r"^[$]",""), r",","") AS FLOAT64) as benefits_nominal,
   TRIM(SPLIT(all_staff_report.assignment_area, " - ")[safe_offset(0)]) as assignment_area_cd,
   TRIM(SPLIT(all_staff_report.assignment_area, " - ")[safe_offset(1)]) as assignment_area_desc,
   TRIM(SPLIT(all_staff_report.assignment_staff_category, " - ")[safe_offset(0)]) as assignment_staff_category_cd,
@@ -40,7 +42,7 @@ SELECT
   ELSE
     TRIM(all_staff_report.assignment_work_school)
   END AS assignment_work_school_desc,
-  SAFE_CAST(all_staff_report.assignment_work_cesa_number as INT64) as cesa_num,
+  SAFE_CAST(all_staff_report.assignment_work_cesa_number as STRING) as cesa_num,
   TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(0)]) as assignment_work_county_cd,
   TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(1)]) as assignment_work_county_name,
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(0)]) as assignment_work_school_level_cd,

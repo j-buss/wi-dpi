@@ -37,10 +37,11 @@ SELECT
   all_staff_report.lg_sort_cd,
   all_staff_report.hg_sort_cd,
   all_staff_report.bilingual,
-  ROUND(all_staff_report.assgn_fte/100,3),
+  ROUND(all_staff_report.assgn_fte/100,3) as assignment_fte,
 
   TRIM(all_staff_report.school_name) as school_name,
-  TRIM(all_staff_report.grd_level) as grade_level,
+  TRIM(all_staff_report.grd_level) as school_level_cd,
+  grade_level.description as school_level_desc,
   SAFE_CAST(TRIM(all_staff_report.cesa_number) as INT64) as cesa_num,
   all_staff_report.cnty_nbr as county_number,
   TRIM(all_staff_report.cnty_name) as county_name,
@@ -79,3 +80,5 @@ FROM
    ON TRIM(all_staff_report.raceethn) = race_ethnicity.code
   LEFT JOIN (SELECT distinct work_location_name as district_desc, work_agency_cd as district_cd FROM `wi-dpi-010.2015.2015_Real`) district_cd_tbl
    ON all_staff_report.hire_agncy_cd = district_cd_tbl.district_cd
+  LEFT JOIN `wi-dpi-010.2015.2015_grade_level` grade_level
+   ON all_staff_report.grd_level = SAFE_CAST(grade_level.code AS STRING)

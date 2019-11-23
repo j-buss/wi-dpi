@@ -3,7 +3,7 @@ SELECT
   all_staff_report.school_year as year_session,
   TRIM(lower(all_staff_report.first_name)) as first_name,
   TRIM(lower(all_staff_report.last_name)) as last_name,
-  SAFE_CAST(all_staff_report.entity_id as INT64) as entity_id,
+  SAFE_CAST(all_staff_report.entity_id as STRING) as entity_id,
   TRIM(all_staff_report.gender) as gender,
   TRIM(SPLIT(all_staff_report.raceethnicity, " - ")[safe_offset(0)]) as race_ethnicity_cd,
   TRIM(SPLIT(all_staff_report.raceethnicity, " - ")[safe_offset(1)]) as race_ethnicity_desc,
@@ -40,7 +40,7 @@ SELECT
   ELSE
     TRIM(all_staff_report.assignment_work_school)
   END AS assignment_work_school_desc,
-  SAFE_CAST(all_staff_report.assignment_work_cesa_number as INT64) as cesa_num,
+  SAFE_CAST(all_staff_report.assignment_work_cesa_number as STRING) as cesa_num,
   TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(0)]) as assignment_work_county_cd,
   TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(1)]) as assignment_work_county_name,
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(0)]) as assignment_work_school_level_cd,
