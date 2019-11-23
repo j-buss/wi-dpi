@@ -27,7 +27,7 @@ SELECT
     ELSE Max(real_2018.benefits)
   END AS Benefits
 FROM
-  `wi-dpi-010.2018.2018_real` real_2018
+  `wi-dpi-010.2018.2018_Real` real_2018
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
   ON (real_2018.research_id = pos_class.key and pos_class.year = "2018")
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
@@ -72,7 +72,7 @@ SELECT
     ELSE Max(real_2019.benefits)
   END AS Benefits
 FROM
-  `wi-dpi-010.2019.2019_real` real_2019
+  `wi-dpi-010.2019.2019_Real` real_2019
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
   ON (real_2019.research_id = pos_class.key and pos_class.year = "2019")
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
@@ -117,7 +117,7 @@ SELECT
     ELSE Max(real_2017.benefits)
   END AS Benefits
 FROM
-  `wi-dpi-010.2017.2017_real` real_2017
+  `wi-dpi-010.2017.2017_Real` real_2017
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
   ON (real_2017.research_id = pos_class.key and pos_class.year = "2017")
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
@@ -141,7 +141,7 @@ SELECT
   MAX(real_2016.gender) as gender,
   MAX(real_2016.race_ethnicity_cd) as race_ethnicity_cd,
   MAX(real_2016.birth_year) as birth_year,
-  MAX(real_2016.high_degree_cd) as max_contract_high_degree_cd,
+  CAST(MAX(real_2016.high_degree_cd) AS STRING) as max_contract_high_degree_cd,
   MAX(real_2016.local_exp) as max_contract_local_experience,
   MAX(real_2016.total_exp) as max_contract_total_experience,
   MAX(real_2016.contract_days) as max_contract_days,
@@ -186,7 +186,7 @@ SELECT
   MAX(real_2015.gender) as gender,
   MAX(real_2015.race_ethnicity_cd) as race_ethnicity_cd,
   MAX(real_2015.birth_year) as birth_year,
-  MAX(real_2015.high_degree_cd) as max_contract_high_degree_cd,
+  CAST(MAX(real_2015.high_degree_cd) AS STRING) as max_contract_high_degree_cd,
   MAX(real_2015.local_exp) as max_contract_local_experience,
   MAX(real_2015.total_exp) as max_contract_total_experience,
   MAX(real_2015.contract_days) as max_contract_days,
