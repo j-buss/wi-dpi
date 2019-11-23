@@ -1,6 +1,6 @@
 SELECT
   "2018" as year,
-  real_2018.research_id,
+  real_2018.research_id as key,
   MAX(real_2018.first_name) as first_name,
   MAX(real_2018.last_name) as last_name,
   MAX(real_2018.gender) as gender,
@@ -45,7 +45,7 @@ GROUP BY
 UNION ALL
 SELECT
   "2019" as year,
-  real_2019.research_id,
+  real_2019.research_id as key,
   MAX(real_2019.first_name) as first_name,
   MAX(real_2019.last_name) as last_name,
   MAX(real_2019.gender) as gender,
@@ -90,7 +90,7 @@ GROUP BY
 UNION ALL
 SELECT
   "2017" as year,
-  real_2017.research_id,
+  real_2017.research_id as key,
   MAX(real_2017.first_name) as first_name,
   MAX(real_2017.last_name) as last_name,
   MAX(real_2017.gender) as gender,
@@ -135,7 +135,7 @@ GROUP BY
 UNION ALL
 SELECT
   "2016" as year,
-  real_2016.id_nbr,
+  real_2016.id_nbr as key,
   MAX(real_2016.first_name) as first_name,
   MAX(real_2016.last_name) as last_name,
   MAX(real_2016.gender) as gender,
@@ -180,7 +180,7 @@ GROUP BY
 UNION ALL
 SELECT
   "2015" as year,
-  real_2015.id_nbr,
+  real_2015.id_nbr as key,
   MAX(real_2015.first_name) as first_name,
   MAX(real_2015.last_name) as last_name,
   MAX(real_2015.gender) as gender,
