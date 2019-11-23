@@ -6,7 +6,7 @@ SELECT
   COUNT(B.county_number) as county_cnt,
   COUNT(B.work_location_name) as district_cnt,
   COUNT(B.school_name) as school_cnt,
-  ROUND(SUM(B.assgn_fte),3) AS assignment_fte,
+  ROUND(SUM(B.assgn_fte)/100,3) AS assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
@@ -34,7 +34,7 @@ SELECT
   COUNT(B.county_number) as county_cnt,
   COUNT(B.work_location_name) as district_cnt,
   COUNT(B.school_name) as school_cnt,
-  ROUND(SUM(B.assgn_fte),3) AS assignment_fte,
+  ROUND(SUM(B.assgn_fte)/100,3) AS assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
