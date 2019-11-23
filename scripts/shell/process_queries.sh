@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # 2015
-# python3 ../../process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/2015_01_Raw_Combine.sql "2015" "2015_Nominal"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/2015_01_Raw_Combine.sql "2015" "2015_Nominal"
 
 # 2016
-# python3 ../../process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/2016_01_New_Agency_Type.sql "2016" "2016_agency_type_NEW"
-# python3 ../../process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/2016_02_Raw_Combine.sql "2016" "2016_Nominal"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/2016_01_New_Agency_Type.sql "2016" "2016_agency_type_NEW"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/2016_02_Raw_Combine.sql "2016" "2016_Nominal"
 
 # 2017
 # python3 ../../process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/2017_01_Extract_Desc.sql "2017" "2017_Nominal"
@@ -25,4 +25,4 @@
 # python3 process/createTableFromSQL.py ../../.gcp/API_process_data.json ../sql/Educator_Position_Classification_by_Year.sql "Merged" "Educator_Position_Classification_by_Year"
 
 # Create
-python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Yearly_Master_Data.sql "Merged" "Master_Data_by_Year"
+# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Yearly_Master_Data.sql "Merged" "Master_Data_by_Year"
