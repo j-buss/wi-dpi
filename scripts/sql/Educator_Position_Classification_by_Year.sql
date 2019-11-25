@@ -6,7 +6,7 @@ SELECT
   SUM(CASE WHEN A.position_classification = 'OTHER' THEN 1 ELSE 0 END) as other_cnt
 FROM
   (SELECT
-    "2015" as year,
+    all_staff_report.school_year as year,
     all_staff_report.id_nbr AS key,
     CASE
       WHEN all_staff_report.position_type_desc = 'Licensed' AND all_staff_report.position_description =   'Teacher' THEN 'TEACHER'
@@ -28,7 +28,7 @@ SELECT
   SUM(CASE WHEN A.position_classification = 'OTHER' THEN 1 ELSE 0 END) as other_cnt
 FROM
   (SELECT
-    "2016" as year,
+    all_staff_report.school_year as year,
     all_staff_report.id_nbr AS key,
     CASE
       WHEN all_staff_report.position_type_desc = 'Licensed' AND all_staff_report.position_description =   'Teacher' THEN 'TEACHER'
@@ -50,7 +50,7 @@ SELECT
   sum(A.o_cnt) as other_cnt
 FROM
   (SELECT
-    "2018" as year,
+    all_staff_report.year_session as year,
     all_staff_report.research_id AS key,
     CASE WHEN all_staff_report.position_classification = 'Teachers' THEN 1 ELSE 0 END AS t_cnt,
     CASE WHEN all_staff_report.position_classification = 'Administrators' THEN 1 ELSE 0 END AS a_cnt,
@@ -72,7 +72,7 @@ SELECT
   sum(A.o_cnt) as other_cnt
 FROM
   (SELECT
-    "2017" as year,
+    all_staff_report.year_session as year,
     all_staff_report.research_id AS key,
     CASE WHEN all_staff_report.position_classification = 'Teachers' THEN 1 ELSE 0 END AS t_cnt,
     CASE WHEN all_staff_report.position_classification = 'Administrators' THEN 1 ELSE 0 END AS a_cnt,
@@ -94,7 +94,7 @@ SELECT
   sum(A.o_cnt) as other_cnt
 FROM
   (SELECT
-    "2019" as year,
+    all_staff_report.year_session as year,
     all_staff_report.research_id AS key,
     CASE WHEN all_staff_report.position_classification = 'Teachers' THEN 1 ELSE 0 END AS t_cnt,
     CASE WHEN all_staff_report.position_classification = 'Administrators' THEN 1 ELSE 0 END AS a_cnt,

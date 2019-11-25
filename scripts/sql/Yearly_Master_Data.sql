@@ -1,5 +1,5 @@
 SELECT
-  "2018" as year,
+  real_2018.year_session as year,
   real_2018.research_id as key,
   MAX(real_2018.first_name) as first_name,
   MAX(real_2018.last_name) as last_name,
@@ -29,10 +29,11 @@ SELECT
 FROM
   `wi-dpi-010.2018.2018_Real` real_2018
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
-  ON (real_2018.research_id = pos_class.key and pos_class.year = "2018")
+  ON (real_2018.research_id = pos_class.key and pos_class.year = real_2018.year_session)
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
-  ON (real_2018.research_id = role_summary.key and role_summary.year = "2018")
+  ON (real_2018.research_id = role_summary.key and role_summary.year = real_2018.year_session)
 GROUP BY
+  real_2018.year_session,
   real_2018.research_id,
   pos_class.teacher_cnt,
   pos_class.admin_cnt,
@@ -44,7 +45,7 @@ GROUP BY
   role_summary.contract_cnt
 UNION ALL
 SELECT
-  "2019" as year,
+  real_2019.year_session as year,
   real_2019.research_id as key,
   MAX(real_2019.first_name) as first_name,
   MAX(real_2019.last_name) as last_name,
@@ -74,10 +75,11 @@ SELECT
 FROM
   `wi-dpi-010.2019.2019_Real` real_2019
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
-  ON (real_2019.research_id = pos_class.key and pos_class.year = "2019")
+  ON (real_2019.research_id = pos_class.key and pos_class.year = real_2019.year_session)
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
-  ON (real_2019.research_id = role_summary.key and role_summary.year = "2019")
+  ON (real_2019.research_id = role_summary.key and role_summary.year = real_2019.year_session)
 GROUP BY
+  real_2019.year_session,
   real_2019.research_id,
   pos_class.teacher_cnt,
   pos_class.admin_cnt,
@@ -89,7 +91,7 @@ GROUP BY
   role_summary.contract_cnt
 UNION ALL
 SELECT
-  "2017" as year,
+  real_2017.year_session as year,
   real_2017.research_id as key,
   MAX(real_2017.first_name) as first_name,
   MAX(real_2017.last_name) as last_name,
@@ -119,10 +121,11 @@ SELECT
 FROM
   `wi-dpi-010.2017.2017_Real` real_2017
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
-  ON (real_2017.research_id = pos_class.key and pos_class.year = "2017")
+  ON (real_2017.research_id = pos_class.key and pos_class.year = real_2017.year_session)
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
-  ON (real_2017.research_id = role_summary.key and role_summary.year = "2017")
+  ON (real_2017.research_id = role_summary.key and role_summary.year = real_2017.year_session)
 GROUP BY
+  real_2017.year_session,
   real_2017.research_id,
   pos_class.teacher_cnt,
   pos_class.admin_cnt,
@@ -134,7 +137,7 @@ GROUP BY
   role_summary.contract_cnt
 UNION ALL
 SELECT
-  "2016" as year,
+  real_2016.school_year as year,
   real_2016.id_nbr as key,
   MAX(real_2016.first_name) as first_name,
   MAX(real_2016.last_name) as last_name,
@@ -164,10 +167,11 @@ SELECT
 FROM
   `wi-dpi-010.2016.2016_Real` real_2016
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
-  ON (real_2016.id_nbr = pos_class.key and pos_class.year = "2016")
+  ON (real_2016.id_nbr = pos_class.key and pos_class.year = real_2016.school_year)
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
-  ON (real_2016.id_nbr = role_summary.key and role_summary.year = "2016")
+  ON (real_2016.id_nbr = role_summary.key and role_summary.year = real_2016.school_year)
 GROUP BY
+  real_2016.school_year,
   real_2016.id_nbr,
   pos_class.teacher_cnt,
   pos_class.admin_cnt,
@@ -179,7 +183,7 @@ GROUP BY
   role_summary.contract_cnt
 UNION ALL
 SELECT
-  "2015" as year,
+  real_2015.school_year as year,
   real_2015.id_nbr as key,
   MAX(real_2015.first_name) as first_name,
   MAX(real_2015.last_name) as last_name,
@@ -209,10 +213,11 @@ SELECT
 FROM
   `wi-dpi-010.2015.2015_Real` real_2015
   INNER JOIN `wi-dpi-010.Merged.Educator_Position_Classification_by_Year` pos_class
-  ON (real_2015.id_nbr = pos_class.key and pos_class.year = "2015")
+  ON (real_2015.id_nbr = pos_class.key and pos_class.year = real_2015.school_year)
   INNER JOIN `wi-dpi-010.Merged.Educator_Role_Summary_by_Year` role_summary
-  ON (real_2015.id_nbr = role_summary.key and role_summary.year = "2015")
+  ON (real_2015.id_nbr = role_summary.key and role_summary.year = real_2015.school_year)
 GROUP BY
+  real_2015.school_year,
   real_2015.id_nbr,
   pos_class.teacher_cnt,
   pos_class.admin_cnt,
