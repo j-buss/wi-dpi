@@ -78,7 +78,7 @@ FROM
    ON LPAD(CAST(all_staff_report.work_agncy_typ AS STRING), 2, "0") = work_agency_type.code
   LEFT JOIN `wi-dpi-010.2015.2015_race` race_ethnicity
    ON TRIM(all_staff_report.raceethn) = race_ethnicity.code
-  LEFT JOIN (SELECT distinct work_location_name as district_desc, work_agency_cd as district_cd FROM `wi-dpi-010.2015.2015_Real`) district_cd_tbl
+  LEFT JOIN (SELECT distinct work_location_name as district_desc, work_agncy_cd as district_cd FROM `wi-dpi-010.2015.2015_raw_data`) district_cd_tbl
    ON all_staff_report.hire_agncy_cd = district_cd_tbl.district_cd
   LEFT JOIN `wi-dpi-010.2015.2015_grade_level` grade_level
    ON all_staff_report.grd_level = SAFE_CAST(grade_level.code AS STRING)
