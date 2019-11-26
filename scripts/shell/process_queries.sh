@@ -21,8 +21,14 @@ python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/201
 python3 process/adjInflation.py .gcp/API_process_data.json config/bq_adjInflation.json
 
 # Create Educator Summaries by Year
-python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Educator_Role_Summary_by_Year.sql "Merged" "Educator_Role_Summary_by_Year"
-python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Educator_Position_Classification_by_Year.sql "Merged" "Educator_Position_Classification_by_Year"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/role_summary_2015_newer.sql "Merged" "role_sum_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/pos_classification_2015_newer.sql "Merged" "pos_class_2015_newer"
 
-# Create
-python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/Yearly_Master_Data.sql "Merged" "Master_Data_by_Year"
+# Create Master Data by YEar
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/master_data_by_year_2015_newer.sql "Merged" "master_data_2015_newer"
+
+# Create Merged Detail 2015 Newer
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/detail_2015_newer.sql "Merged" "detail_2015"
+
+# Combine Merged Data and Master Data
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/flattened_2015_newer.sql "Merged" "flattened_2015_newer"
