@@ -14,7 +14,7 @@ SELECT
   master_data.admin_cnt,
   master_data.other_cnt,
   master_data.rec_cnt,
-  master_data.assignment_fte,
+  master_data.total_assignment_fte,
   master_data.salary_cnt,
   master_data.null_salary_cnt,
   master_data.contract_cnt,
