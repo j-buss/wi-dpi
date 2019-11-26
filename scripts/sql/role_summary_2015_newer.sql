@@ -6,7 +6,7 @@ SELECT
   COUNT(B.county_number) as county_cnt,
   COUNT(B.work_agency_desc) as district_cnt,
   COUNT(B.school_name) as school_cnt,
-  ROUND(SUM(B.assignment_fte)/100,3) AS assignment_fte,
+  ROUND(SUM(B.assignment_fte)/100,3) AS total_assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
@@ -36,7 +36,7 @@ SELECT
   COUNT(B.county_number) as county_cnt,
   COUNT(B.work_agency_desc) as district_cnt,
   COUNT(B.school_name) as school_cnt,
-  ROUND(SUM(B.assignment_fte)/100,3) AS assignment_fte,
+  ROUND(SUM(B.assignment_fte)/100,3) AS total_assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
@@ -66,7 +66,7 @@ SELECT
   count(distinct B.assignment_work_county_cd) as county_cnt,
   count(distinct B.assignment_work_agency_cd) as district_cnt,
   count(distinct B.assignment_work_school_cd) as school_cnt,
-  ROUND(SUM(B.assignment_fte),3) AS assignment_fte,
+  ROUND(SUM(B.assignment_fte),3) AS total_assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
@@ -96,7 +96,7 @@ SELECT
   count(distinct B.assignment_work_county_cd) as county_cnt,
   count(distinct B.assignment_work_agency_cd) as district_cnt,
   count(distinct B.assignment_work_school_cd) as school_cnt,
-  ROUND(SUM(B.assignment_fte),3) AS assignment_fte,
+  ROUND(SUM(B.assignment_fte),3) AS total_assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
@@ -126,7 +126,7 @@ SELECT
   count(distinct B.assignment_work_county_cd) as county_cnt,
   count(distinct B.assignment_work_agency_cd) as district_cnt,
   count(distinct B.assignment_work_school_cd) as school_cnt,
-  ROUND(SUM(B.assignment_fte),3) AS assignment_fte,
+  ROUND(SUM(B.assignment_fte),3) AS total_assignment_fte,
   COUNT(distinct B.salary) AS contract_cnt,
   SUM(B.salary_cnt) AS salary_cnt,
   SUM(B.null_salary_cnt) AS null_salary_cnt
