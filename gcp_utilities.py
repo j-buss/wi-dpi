@@ -11,11 +11,12 @@ import os
 from io import StringIO
 
 
-def load_gcp_credentials(api_file):
+def load_credentials(api_file):
     try:
         with open(api_file) as source:
             info = json.load(source)
         creds = service_account.Credentials.from_service_account_info(info)
+        project_id = info["project_id"]
         logging.debug("Successful authorization")
 
     except FileNotFoundError:
@@ -24,7 +25,7 @@ def load_gcp_credentials(api_file):
         print("Exiting now.")
         sys.exit(1)
 
-    return creds
+    return creds, project_id
 
 
 def create_bq_ds(client, dataset_name):
