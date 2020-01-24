@@ -41,8 +41,12 @@ SELECT
     TRIM(all_staff_report.assignment_work_school)
   END AS assignment_work_school_desc,
   SAFE_CAST(all_staff_report.assignment_work_cesa_number as STRING) as cesa_num,
-  TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(0)]) as assignment_work_county_cd,
-  TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(1)]) as assignment_work_county_name,
+
+
+  county_codes.county_code,
+  county_codes.county_name,
+  county_codes.fips_code as county_fips_code,
+
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(0)]) as assignment_work_school_level_cd,
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(1)]) as assignment_work_school_level_desc,
   TRIM(SPLIT(all_staff_report.assignment_position, " - ")[safe_offset(0)]) as assignment_position_cd,
@@ -66,3 +70,9 @@ SELECT
   SAFE_CAST(all_staff_report.district_mailing_zip_code as String) as district_mailing_zip_code
 FROM
   `wi-dpi-010.2017.2017` all_staff_report
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_county_fips_codes` county_codes
+   ON SAFE_CAST(TRIM(SPLIT(all_staff_report.assignment_work_county, " - ")[safe_offset(0)]) AS INT64) = county_codes.county_code
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_school_districts` as hire_agency_districts
+    ON SAFE_CAST(TRIM(SPLIT(all_staff_report.hire_agency, " - ")[safe_offset(0)]) AS INT64) = hire_agency_districts.lea_code
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_school_districts` as work_agency_districts
+    ON SAFE_CAST(TRIM(SPLIT(all_staff_report.assignment_work_agency, " - ")[safe_offset(0)]) AS INT64) = work_agency_districts.lea_code

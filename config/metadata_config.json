@@ -1,0 +1,32 @@
+[
+  {
+    "name":"wi_dpi_county_fips_codes",
+    "type":"csv",
+    "project_id":"wi-dpi-010",
+    "bucket_name":"staging-008",
+    "dataset_name":"metadata",
+    "source_blob_name":"wi_dpi_county_fips_codes.csv",
+    "del_rows":"",
+    "del_cols":""
+  },
+  {
+    "name":"wi_dpi_school_districts",
+    "type":"csv",
+    "project_id":"wi-dpi-010",
+    "bucket_name":"staging-008",
+    "dataset_name":"metadata",
+    "source_blob_name":"wi_dpi_school_districts.csv",
+    "del_rows":"",
+    "del_cols":""
+  },
+  {
+    "name":"wi_dpi_schools",
+    "type":"csv",
+    "project_id":"wi-dpi-010",
+    "bucket_name":"staging-008",
+    "dataset_name":"metadata",
+    "source_blob_name":"wi_dpi_schools.csv",
+    "del_rows":"",
+    "del_cols":""
+  }
+]

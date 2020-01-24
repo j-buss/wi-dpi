@@ -22,9 +22,9 @@ SELECT
   LPAD(CAST(all_staff_report.work_agncy_typ AS STRING), 2, "0") as work_agency_type_cd,
   work_agency_type.description as work_agency_type_desc,
   all_staff_report.hire_agncy_cd as hire_agency_cd,
-  district_cd_tbl.district_desc as hire_agency_desc,
+  hire_agency_districts.district_name as hire_agency_desc,
   all_staff_report.work_agncy_cd as work_agency_cd,
-  TRIM(all_staff_report.work_location_name) as work_agency_desc,
+  work_agency_districts.district_name as work_agency_desc,
   TRIM(all_staff_report.school_cd) as school_cd,
   position.position_type as position_type_cd,
   pos_type.description as position_type_desc,
@@ -43,8 +43,9 @@ SELECT
   TRIM(all_staff_report.grd_level) as school_level_cd,
   grade_level.description as school_level_desc,
   SAFE_CAST(TRIM(all_staff_report.cesa_number) as INT64) as cesa_num,
-  all_staff_report.cnty_nbr as county_number,
-  TRIM(all_staff_report.cnty_name) as county_name,
+  county_codes.county_code,
+  county_codes.county_name,
+  county_codes.fips_code as county_fips_code,
   TRIM(all_staff_report.school_mailing_address1) as school_mailing_address1,
   TRIM(all_staff_report.school_mailing_address2) as school_mailing_address2,
   TRIM(all_staff_report.mail_city) as mail_city,
@@ -78,7 +79,11 @@ FROM
    ON LPAD(CAST(all_staff_report.work_agncy_typ AS STRING), 2, "0") = work_agency_type.code
   LEFT JOIN `wi-dpi-010.2015.2015_race` race_ethnicity
    ON TRIM(all_staff_report.raceethn) = race_ethnicity.code
-  LEFT JOIN (SELECT distinct work_location_name as district_desc, work_agncy_cd as district_cd FROM `wi-dpi-010.2015.2015_raw_data`) district_cd_tbl
-   ON all_staff_report.hire_agncy_cd = district_cd_tbl.district_cd
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_school_districts` as hire_agency_districts
+    ON all_staff_report.hire_agncy_cd = hire_agency_districts.lea_code
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_school_districts` as work_agency_districts
+    ON all_staff_report.work_agncy_cd = work_agency_districts.lea_code
   LEFT JOIN `wi-dpi-010.2015.2015_grade_level` grade_level
    ON all_staff_report.grd_level = SAFE_CAST(grade_level.code AS STRING)
+  LEFT JOIN `wi-dpi-010.metadata.wi_dpi_county_fips_codes` county_codes
+   ON all_staff_report.cnty_nbr = county_codes.county_code
