@@ -16,7 +16,7 @@ SELECT
   detail.assignment_area_description,
   master_data.total_assignment_fte,
   detail.assignment_fte,
-  detail.cesa_num,
+  SAFE_CAST(detail.cesa_num as int64) as cesa_num,
   detail.county_name,
   ROUND((detail.assignment_fte / master_data.total_assignment_fte) * master_data.max_salary,2) as allocated_salary
 FROM

@@ -35,8 +35,8 @@ SELECT
   school_level_cd,
   school_level_desc,
   SAFE_CAST(cesa_num AS STRING) AS cesa_num,
-  SAFE_CAST(county_number AS STRING) as county_num,
-  county_name,
+  REGEXP_EXTRACT(SAFE_CAST(county_number AS STRING),r'^0?(\d+)$') as county_num,
+  county_translation.new_county_name as county_name,
   school_mailing_address1,
   mail_city,
   mail_st,
@@ -44,7 +44,9 @@ SELECT
   long_term_sub,
   sub_contracted
 FROM
-  `wi-dpi-010.2015.2015_Real`
+  `wi-dpi-010.2015.2015_Real` as real_2015 inner join
+  `wi-dpi-010.Merged.2015_2016_county_translation` as county_translation
+  ON real_2015.county_name = county_translation.county_name
 UNION ALL
 SELECT
   id_nbr as key,
@@ -83,8 +85,8 @@ SELECT
   school_level_cd,
   school_level_desc,
   SAFE_CAST(cesa_num AS STRING) AS cesa_num,
-  SAFE_CAST(county_number AS STRING) as county_num,
-  county_name,
+  REGEXP_EXTRACT(SAFE_CAST(county_number AS STRING),r'^0?(\d+)$') as county_num,
+  county_translation.new_county_name as county_name,
   school_mailing_address1,
   mail_city,
   mail_st,
@@ -92,7 +94,9 @@ SELECT
   long_term_sub,
   sub_contracted
 FROM
-  `wi-dpi-010.2016.2016_Real`
+  `wi-dpi-010.2016.2016_Real` as real_2016 inner join
+  `wi-dpi-010.Merged.2015_2016_county_translation` as county_translation
+  ON real_2016.county_name = county_translation.county_name
 UNION ALL
 SELECT
   research_id as key,
@@ -131,7 +135,7 @@ SELECT
   assignment_work_school_level_cd as school_level_cd,
   assignment_work_school_level_desc as school_level_desc,
   cesa_num,
-  assignment_work_county_cd as county_number,
+  REGEXP_EXTRACT(assignment_work_county_cd,r'^0?(\d+)$') as county_num,
   assignment_work_county_name as county_name,
   school_mailing_street_address as school_mailing_address1,
   school_mailing_city as mail_city,
@@ -179,7 +183,7 @@ SELECT
   assignment_work_school_level_cd as school_level_cd,
   assignment_work_school_level_desc as school_level_desc,
   cesa_num,
-  assignment_work_county_cd as county_number,
+  REGEXP_EXTRACT(assignment_work_county_cd,r'^0?(\d+)$') as county_num,
   assignment_work_county_name as county_name,
   school_mailing_street_address as school_mailing_address1,
   school_mailing_city as mail_city,
@@ -227,7 +231,7 @@ SELECT
   assignment_work_school_level_cd as school_level_cd,
   assignment_work_school_level_desc as school_level_desc,
   cesa_num,
-  assignment_work_county_cd as county_number,
+  REGEXP_EXTRACT(assignment_work_county_cd,r'^0?(\d+)$') as county_num,
   assignment_work_county_name as county_name,
   school_mailing_street_address as school_mailing_address1,
   school_mailing_city as mail_city,

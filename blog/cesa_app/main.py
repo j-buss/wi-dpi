@@ -12,7 +12,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 if len(sys.argv) != 4:
-    print("Usage: python3 cesa_summary_app.py  CREDENTIAL_FILE  DATASET_NAME  TABLE_NAME")
+    print("Usage: python3 main.py  CREDENTIAL_FILE  DATASET_NAME  TABLE_NAME")
     sys.exit(1)
 
 credential_file = sys.argv[1]

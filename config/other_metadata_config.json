@@ -1,0 +1,12 @@
+[
+  {
+    "name":"wi_dpi_county_fips_codes",
+    "type":"csv",
+    "project_id":"wi-dpi-010",
+    "bucket_name":"staging-008",
+    "dataset_name":"general_metadata",
+    "source_blob_name":"wi-dpi-county-fips-codes.csv",
+    "del_rows":"",
+    "del_cols":""
+  }
+]

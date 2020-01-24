@@ -27,11 +27,15 @@
 # Create Master Data by YEar
 # python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/master_data_by_year_2015_newer.sql "Merged" "master_data_2015_newer"
 
+
+# 2015 / 2016 County Name Translation - To Do Prior to Merged Detail
+# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/2015_2016_county_translation.sql "Merged" "2015_2016_county_translation"
+
 # Create Merged Detail 2015 Newer
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/detail_2015_newer.sql "Merged" "detail_2015"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/detail_2015_newer.sql "Merged" "detail_2015"
 
 # Combine Merged Data and Master Data
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/flattened_2015_newer.sql "Merged" "flattened_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/flattened_2015_newer.sql "Merged" "flattened_2015_newer"
 
 # Create Assignment Table
 python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/assignment_table_2015_newer.sql "Merged" "assignment_table_2015_newer"
