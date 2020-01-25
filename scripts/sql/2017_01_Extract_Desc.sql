@@ -23,13 +23,14 @@ SELECT
   TRIM(SPLIT(all_staff_report.assignment_staff_category, " - ")[safe_offset(1)]) as assignment_staff_category_desc,
   all_staff_report.position_classification,
   TRIM(SPLIT(all_staff_report.hire_agency, " - ")[safe_offset(0)]) as hire_agency_cd,
-  TRIM(SPLIT(all_staff_report.hire_agency, " - ")[safe_offset(1)]) as hire_agency_desc,
+  hire_agency_districts.district_name as hire_agency_desc,
   TRIM(SPLIT(all_staff_report.assignment_hire_agency_type, " - ")[safe_offset(0)]) as assignment_hire_agency_type_cd,
   TRIM(SPLIT(all_staff_report.assignment_hire_agency_type, " - ")[safe_offset(1)]) as assignment_hire_agency_type_desc,
   TRIM(SPLIT(all_staff_report.assignment_work_agency, " - ")[safe_offset(0)]) as assignment_work_agency_cd,
-  TRIM(SPLIT(all_staff_report.assignment_work_agency, " - ")[safe_offset(1)]) as assignment_work_agency_desc,
+  work_agency_districts.district_name as assignment_work_agency_desc,
   TRIM(SPLIT(all_staff_report.work_agency_type, " - ")[safe_offset(0)]) as work_agency_type_cd,
   TRIM(SPLIT(all_staff_report.work_agency_type, " - ")[safe_offset(1)]) as work_agency_type_desc,
+
   CASE
     WHEN REGEXP_CONTAINS(all_staff_report.assignment_work_school," - ") THEN TRIM(SPLIT(all_staff_report.assignment_work_school, " - ")[safe_OFFSET(0)])
   ELSE
@@ -42,9 +43,8 @@ SELECT
   END AS assignment_work_school_desc,
   SAFE_CAST(all_staff_report.assignment_work_cesa_number as STRING) as cesa_num,
 
-
-  county_codes.county_code,
-  county_codes.county_name,
+  county_codes.county_code as assignment_work_county_cd,
+  county_codes.county_name as assignment_work_county_name,
   county_codes.fips_code as county_fips_code,
 
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(0)]) as assignment_work_school_level_cd,
