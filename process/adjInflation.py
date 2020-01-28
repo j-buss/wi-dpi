@@ -17,8 +17,8 @@ if __name__ == "__main__":
     credential_file = sys.argv[1]
     configuration_file = sys.argv[2]
 
+    creds, project_id = gcp.load_credentials(credential_file)
     cpi.update()
-    creds = gcp.load_gcp_credentials(credential_file)
 
     with open(configuration_file) as config_file:
         data = json.load(config_file)
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         ref_year = json_dict["Reference Year"]
         target_dataset = json_dict["Target Dataset"]
         target_table = json_dict["Target Table"]
-        temp_df = pd.read_gbq(sql, credentials=creds)
+        temp_df = pd.read_gbq(sql, credentials=creds, project_id=project_id, dialect='standard')
         temp_df['salary_nominal'] = temp_df['salary']
         temp_df['benefits_nominal'] = temp_df['benefits']
         temp_df['salary'] = temp_df.apply(lambda x: cpi.inflate(x.salary, int(ref_year)), axis=1).round(2)

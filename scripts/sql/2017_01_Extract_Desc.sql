@@ -45,7 +45,7 @@ SELECT
 
   county_codes.county_code as assignment_work_county_cd,
   county_codes.county_name as assignment_work_county_name,
-  county_codes.fips_code as county_fips_code,
+  SAFE_CAST(county_codes.fips_code as INT64) as county_fips_code,
 
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(0)]) as assignment_work_school_level_cd,
   TRIM(SPLIT(all_staff_report.assignment_work_school_level, " - ")[safe_offset(1)]) as assignment_work_school_level_desc,

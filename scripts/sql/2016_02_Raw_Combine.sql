@@ -47,7 +47,7 @@ SELECT
 
   county_codes.county_code,
   county_codes.county_name,
-  county_codes.fips_code as county_fips_code,
+  SAFE_CAST(county_codes.fips_code as INT64) as county_fips_code,
 
   TRIM(all_staff_report.school_mailing_address1) as school_mailing_address1,
   TRIM(all_staff_report.school_mailing_address2) as school_mailing_address2,
