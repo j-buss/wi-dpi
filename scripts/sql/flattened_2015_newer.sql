@@ -54,7 +54,7 @@ SELECT
   dtl_data.school_level_cd,
   dtl_data.school_level_desc,
   dtl_data.cesa_num,
-  dtl_data.county_num,
+  dtl_data.county_fips_code,
   dtl_data.county_name,
   dtl_data.school_mailing_address1,
   dtl_data.mail_city,

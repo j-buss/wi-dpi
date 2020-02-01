@@ -18,6 +18,7 @@ SELECT
   detail.assignment_fte,
   SAFE_CAST(detail.cesa_num as int64) as cesa_num,
   detail.county_name,
+  detail.county_fips_code,
   ROUND((detail.assignment_fte / master_data.total_assignment_fte) * master_data.max_salary,2) as allocated_salary
 FROM
   `wi-dpi-010.Merged.detail_2015` as detail

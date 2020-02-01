@@ -77,7 +77,7 @@ FROM
       A.salary,
       A.assignment_fte,
       A.cesa_num,
-      A.county_fips_code,
+      SAFE_CAST(SUBSTR(A.county_fips_code, 1, 5) AS INT64) as county_fips_code,
       A.assignment_work_agency_cd,
       A.assignment_work_school_cd,
       CASE WHEN A.Salary is Not Null THEN 1 ELSE 0 END AS salary_cnt,

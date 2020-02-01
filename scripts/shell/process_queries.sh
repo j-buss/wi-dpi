@@ -19,24 +19,24 @@
 # Run Processing for Inflation Adjustment
 #    may require export PYTHONPATH=$PYTHONPATH:`pwd` from the "wi-dpi-analysis" directory
 #    Example: export PYTHONPATH=$PYTHONPATH:`wi-dpi-analysis`
-python3 process/adjInflation.py .gcp/API_process_data.json config/bq_adjInflation.json
+# python3 process/adjInflation.py .gcp/API_process_data.json config/bq_adjInflation.json
 
 # Create Educator Summaries by Year
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/role_summary_2015_newer.sql "Merged" "role_sum_2015_newer"
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/pos_classification_2015_newer.sql "Merged" "pos_class_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/role_summary_2015_newer.sql "Merged" "role_sum_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/pos_classification_2015_newer.sql "Merged" "pos_class_2015_newer"
 
 # Create Master Data by YEar
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/master_data_by_year_2015_newer.sql "Merged" "master_data_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/master_data_by_year_2015_newer.sql "Merged" "master_data_2015_newer"
 
-
+##### NOT NEEDED. DELETE LINE AFTER FINAL TEST
 # 2015 / 2016 County Name Translation - To Do Prior to Merged Detail
 # python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/2015_2016_county_translation.sql "Merged" "2015_2016_county_translation"
 
+# Create Assignment Table
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/detail_2015_newer.sql "Merged" "detail_2015"
+
 # Create Merged Detail 2015 Newer
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/flattened_2015_newer.sql "Merged" "flattened_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/flattened_2015_newer.sql "Merged" "flattened_2015_newer"
 
 # Create Assignment Table
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json sc
-# python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/detail_2015_newer.sql "Merged" "detail_2015"
-
-# Combine Merged Data and Master Dataripts/sql/assignment_table_2015_newer.sql "Merged" "assignment_table_2015_newer"
+python3 process/createTableFromSQL.py .gcp/API_process_data.json scripts/sql/assignment_table_2015_newer.sql "Merged" "assignment_table_2015_newer"
